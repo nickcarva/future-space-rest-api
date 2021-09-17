@@ -8,4 +8,4 @@ app.get('/', (request, response) => {
   return response.json({})
 })
 
-app.listen(3333, () => console.log("Server is running on PORT 3333"))
+app.listen(3333, () => console.log('Server is running on PORT 3333'))
