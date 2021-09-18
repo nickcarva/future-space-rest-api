@@ -3,13 +3,15 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm'
 
 import LaunchServiceProvider from './LaunchServiceProvider'
 import Mission from './Mission'
 import Pad from './Pad'
 import Rocket from './Rocket'
+import LaunchProgram from './LaunchProgram'
 
 export type StatusType = 'draft' | 'trash' | 'published'
 
@@ -107,4 +109,9 @@ export default class Launch {
   @ManyToOne(() => Pad, pad => pad.launches)
   @JoinColumn({ name: 'pad_id' })
   pad: Pad
+
+  @OneToMany(() => LaunchProgram, launch_program => launch_program.launch, {
+    onDelete: 'SET NULL'
+  })
+  launches_programs: LaunchProgram[]
 }
