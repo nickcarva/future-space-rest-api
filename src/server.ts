@@ -2,6 +2,9 @@ import 'dotenv/config'
 
 import express from 'express'
 
+import 'reflect-metadata'
+import './database/connection'
+
 const app = express()
 
 app.get('/', (request, response) => {
