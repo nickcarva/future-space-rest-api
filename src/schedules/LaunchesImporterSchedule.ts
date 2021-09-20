@@ -6,7 +6,7 @@ import { launchesApi } from '@config/launchesApi'
 import { saveLaunchesFromImport } from '@controllers/LaunchesController'
 
 (async () => {
-  schedule.scheduleJob('20 4 * * *', async () => {
+  schedule.scheduleJob('30 3 * * *', async () => {
     console.log(chalk.green('Launches imports started...'))
     console.log(chalk.whiteBright(new Date()))
     console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))
