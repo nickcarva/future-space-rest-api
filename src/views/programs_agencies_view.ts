@@ -13,6 +13,6 @@ export default {
   },
 
   renderManyAgencies (programs_agencies: ProgramAgency[]) {
-    return programs_agencies.map(program_agency => this.render(program_agency.agency))
+    return programs_agencies.map(program_agency => this.renderAgency(program_agency.agency))
   }
 }

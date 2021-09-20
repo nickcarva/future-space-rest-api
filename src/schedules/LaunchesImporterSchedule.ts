@@ -49,8 +49,8 @@ import { saveLaunchesFromImport } from '@controllers/LaunchesController'
 
       console.log(chalk.bgGreen.black(`Imports count: ${importedLaunchesCount}`))
 
-      // wait 60 seconds
-      await new Promise(res => setTimeout(res, 60000))
+      // wait 120 seconds
+      await new Promise(res => setTimeout(res, 120000))
     }
 
     console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))

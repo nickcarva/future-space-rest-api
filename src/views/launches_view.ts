@@ -5,6 +5,10 @@ import timeZone from '@utils/timeZone'
 import Launch from '@models/Launch'
 
 import launchesServicesProvidersView from './launches_services_providers_view'
+import rocketsView from './rockets_view'
+import missionsView from './missions_view'
+import padsView from './pads_view'
+import launchesProgramsView from './launches_programs_view'
 
 export default {
   render (launch: Launch) {
@@ -38,9 +42,25 @@ export default {
         ? launchesServicesProvidersView.render(launch.launch_service_provider)
         : launch.launch_service_provider,
 
+      rocket: launch.rocket
+        ? rocketsView.render(launch.rocket)
+        : launch.rocket,
+
+      mission: launch.mission
+        ? missionsView.render(launch.mission)
+        : launch.mission,
+
+      pad: launch.pad
+        ? padsView.render(launch.pad)
+        : launch.pad,
+
       webcast_live: launch.webcast_live,
       image: launch.image,
       infographic: launch.infographic,
+
+      program: launch.launches_programs && launch.launches_programs.length > 0
+        ? launchesProgramsView.renderManyPrograms(launch.launches_programs)
+        : [],
 
       imported_t: format(utcToZonedTime(launch.imported_t, timeZone), 'dd/MM/yyyy HH:mm:ss', { timeZone }),
       status: launch.status

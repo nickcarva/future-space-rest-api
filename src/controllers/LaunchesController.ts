@@ -1,4 +1,6 @@
+import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
+import * as Yup from 'yup'
 
 import Launch from '@models/Launch'
 import LaunchServiceProvider from '@models/LaunchServiceProvider'
@@ -12,6 +14,8 @@ import Agency from '@models/Agency'
 import Program from '@models/Program'
 import ProgramAgency from '@models/ProgramAgency'
 import LaunchProgram from '@models/LaunchProgram'
+
+import launchesView from '@views/launches_view'
 
 export async function saveLaunchesFromImport (launches: any) {
   const launchServiceProviderRepository = getRepository(LaunchServiceProvider)
@@ -319,5 +323,209 @@ export async function saveLaunchesFromImport (launches: any) {
 }
 
 export default {
+  async runningMessage (request: Request, response: Response) {
+    return response.send('REST Back-end Challenge 20201209 Running')
+  },
 
+  async index (request: Request, response: Response) {
+    const launchRepository = getRepository(Launch)
+
+    const launches = await launchRepository.find({
+      join: {
+        alias: 'launches',
+        leftJoinAndSelect: {
+          launch_service_provider: 'launches.launch_service_provider',
+          rocket: 'launches.rocket',
+          rocket_configuration: 'rocket.rocket_configuration',
+          mission: 'launches.mission',
+          mission_orbit: 'mission.mission_orbit',
+          pad: 'launches.pad',
+          pad_location: 'pad.pad_location',
+          launches_programs: 'launches.launches_programs',
+          program: 'launches_programs.program',
+          programs_agencies: 'program.programs_agencies',
+          agency: 'programs_agencies.agency'
+        }
+      }
+    })
+
+    return response.json(launchesView.renderMany(launches))
+  },
+
+  async paginatedIndex (request: Request, response: Response) {
+    const page = request.query.page
+      ? Number(request.query.page)
+      : 1
+    const per_page = request.query.per_page
+      ? Number(request.query.per_page)
+      : 10
+
+    const startIndex = (page * per_page) - per_page
+
+    const launchRepository = getRepository(Launch)
+
+    const [launches, count] = await launchRepository.findAndCount({
+      join: {
+        alias: 'launches',
+        leftJoinAndSelect: {
+          launch_service_provider: 'launches.launch_service_provider',
+          rocket: 'launches.rocket',
+          rocket_configuration: 'rocket.rocket_configuration',
+          mission: 'launches.mission',
+          mission_orbit: 'mission.mission_orbit',
+          pad: 'launches.pad',
+          pad_location: 'pad.pad_location',
+          launches_programs: 'launches.launches_programs',
+          program: 'launches_programs.program',
+          programs_agencies: 'program.programs_agencies',
+          agency: 'programs_agencies.agency'
+        }
+      },
+      skip: startIndex,
+      take: per_page
+    })
+
+    return response.json({
+      launches: launchesView.renderMany(launches),
+      start: startIndex,
+      count
+    })
+  },
+
+  async show (request: Request, response: Response) {
+    const { launch_id } = request.params
+
+    const launchRepository = getRepository(Launch)
+
+    const launch = await launchRepository.findOne({
+      where: { id: launch_id },
+      join: {
+        alias: 'launch',
+        leftJoinAndSelect: {
+          launch_service_provider: 'launch.launch_service_provider',
+          rocket: 'launch.rocket',
+          rocket_configuration: 'rocket.rocket_configuration',
+          mission: 'launch.mission',
+          mission_orbit: 'mission.mission_orbit',
+          pad: 'launch.pad',
+          pad_location: 'pad.pad_location',
+          launches_programs: 'launch.launches_programs',
+          program: 'launches_programs.program',
+          programs_agencies: 'program.programs_agencies',
+          agency: 'programs_agencies.agency'
+        }
+      }
+    })
+
+    if (launch) {
+      return response.json(launchesView.render(launch))
+    }
+
+    response.status(404).json({ message: 'Launch was not found' })
+  },
+
+  async delete (request: Request, response: Response) {
+    const { launch_id } = request.params
+
+    const launchRepository = getRepository(Launch)
+
+    const launch = await launchRepository.delete(launch_id)
+
+    if (launch.affected > 0) {
+      return response.json({ message: 'Launch was deleted successfully' })
+    }
+
+    return response.status(404).json({ message: 'Launch was not found' })
+  },
+
+  async update (request: Request, response: Response) {
+    const { launch_id } = request.params
+
+    const {
+      url,
+      launch_library_id,
+      slug,
+      name,
+      status,
+      net,
+      window_end,
+      window_start,
+      inhold,
+      tbdtime,
+      tbddate,
+      probability,
+      holdreason,
+      failreason,
+      hashtag,
+      webcast_live,
+      image,
+      infographic
+    } = request.body
+
+    const launchRepository = getRepository(Launch)
+
+    const launchToUpdate = await launchRepository.findOne({ id: launch_id }, {
+      select: ['name']
+    })
+
+    if (launchToUpdate !== undefined) {
+      const data = {
+        url,
+        launch_library_id,
+        slug,
+        name,
+        status,
+        net,
+        window_end,
+        window_start,
+        inhold,
+        tbdtime,
+        tbddate,
+        probability,
+        holdreason,
+        failreason,
+        hashtag,
+        webcast_live,
+        image,
+        infographic
+      }
+
+      const schema = Yup.object().shape({
+        url: Yup.string().required(),
+        launch_library_id: Yup.number().nullable(),
+        slug: Yup.string().required(),
+        name: Yup.string().required(),
+        status: Yup.string().required(),
+
+        net: Yup.string().nullable(),
+        window_start: Yup.string().nullable(),
+        window_end: Yup.string().nullable(),
+
+        inhold: Yup.boolean().nullable(),
+        tbdtime: Yup.boolean().nullable(),
+        tbddate: Yup.boolean().nullable(),
+        probability: Yup.number().nullable(),
+
+        holdreason: Yup.string().nullable(),
+        failreason: Yup.string().nullable(),
+        hashtag: Yup.string().nullable(),
+
+        webcast_live: Yup.boolean().nullable(),
+        image: Yup.string().nullable(),
+        infographic: Yup.string().nullable()
+      })
+
+      await schema.validate(data, {
+        abortEarly: false
+      })
+
+      const company = await launchRepository.update({ id: launch_id }, data)
+
+      if (company.affected > 0) {
+        return response.json({ message: 'Launch was updated successfully' })
+      }
+    }
+
+    return response.status(404).json({ message: 'Launch was not found' })
+  }
 }
