@@ -18,9 +18,10 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(errorHandler)
 
 app.use(routes)
+
+app.use(errorHandler)
 
 app.listen(3333, () => {
   console.log(chalk.bgGreen.black('Server is running on PORT 3333'))
