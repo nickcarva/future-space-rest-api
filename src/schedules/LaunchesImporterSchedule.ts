@@ -5,56 +5,54 @@ import chalk from 'chalk'
 import { launchesApi } from '@config/launchesApi'
 import { saveLaunchesFromImport } from '@controllers/LaunchesController'
 
-(async () => {
-  schedule.scheduleJob('30 3 * * *', async () => {
-    console.log(chalk.green('Launches imports started...'))
-    console.log(chalk.whiteBright(new Date()))
-    console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))
+schedule.scheduleJob('30 3 * * *', async () => {
+  console.log(chalk.green('Launches imports started...'))
+  console.log(chalk.whiteBright(new Date()))
+  console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))
 
-    const LAUNCHES_PER_PAGE = 100
-    const MAX_IMPORTS = 2000
+  const LAUNCHES_PER_PAGE = 100
+  const MAX_IMPORTS = 2000
 
-    let importedLaunchesCount = 0
-    let nextQueryData: string
+  let importedLaunchesCount = 0
+  let nextQueryData: string
 
-    while (true) {
-      if ((importedLaunchesCount + LAUNCHES_PER_PAGE) > MAX_IMPORTS) break
+  while (true) {
+    if ((importedLaunchesCount + LAUNCHES_PER_PAGE) > MAX_IMPORTS) break
 
-      const query = nextQueryData || `?limit=${LAUNCHES_PER_PAGE}&offset=0`
+    const query = nextQueryData || `?limit=${LAUNCHES_PER_PAGE}&offset=0`
 
-      const data = await launchesApi.get(query)
-        .then(res => res.data)
-        .catch(err => {
-          console.log(chalk.bgRed.white.bold(`Launches imports error: ${query}`))
-          console.log({
-            status: err.response.status,
-            statusText: err.response.statusText,
-            data: err.response.data
-          })
-
-          return {
-            error: true
-          }
+    const data = await launchesApi.get(query)
+      .then(res => res.data)
+      .catch(err => {
+        console.log(chalk.bgRed.white.bold(`Launches imports error: ${query}`))
+        console.log({
+          status: err.response.status,
+          statusText: err.response.statusText,
+          data: err.response.data
         })
 
-      const nextUrl = data.next
+        return {
+          error: true
+        }
+      })
 
-      if (data.error || !nextUrl) break
+    const nextUrl = data.next
 
-      await saveLaunchesFromImport(data.results)
+    if (data.error || !nextUrl) break
 
-      nextQueryData = `?${nextUrl.split('?')[1]}`
+    await saveLaunchesFromImport(data.results)
 
-      importedLaunchesCount += LAUNCHES_PER_PAGE
+    nextQueryData = `?${nextUrl.split('?')[1]}`
 
-      console.log(chalk.bgGreen.black(`Imports count: ${importedLaunchesCount}`))
+    importedLaunchesCount += LAUNCHES_PER_PAGE
 
-      // wait 120 seconds
-      await new Promise(res => setTimeout(res, 120000))
-    }
+    console.log(chalk.bgGreen.black(`Imports count: ${importedLaunchesCount}`))
 
-    console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))
-    console.log(chalk.whiteBright(new Date()))
-    console.log(chalk.green('Launches imports ended.'))
-  })
-})()
+    // wait 180 seconds
+    await new Promise(res => setTimeout(res, 180000))
+  }
+
+  console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))
+  console.log(chalk.whiteBright(new Date()))
+  console.log(chalk.green('Launches imports ended.'))
+})
