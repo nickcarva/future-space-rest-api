@@ -1,6 +1,6 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   JoinColumn,
   Column,
@@ -12,7 +12,7 @@ import RocketConfiguration from './RocketConfiguration'
 
 @Entity('rockets')
 export default class Rocket {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
   @Column('integer', { nullable: true })

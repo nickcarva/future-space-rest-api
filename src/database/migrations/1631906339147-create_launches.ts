@@ -8,7 +8,7 @@ export class createLaunches1631906339147 implements MigrationInterface {
         name: 'id',
         type: 'uuid',
         isPrimary: true,
-        generationStrategy: 'uuid'
+        isGenerated: false
       },
       {
         name: 'url',

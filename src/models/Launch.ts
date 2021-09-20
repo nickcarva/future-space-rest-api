@@ -1,10 +1,10 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany
+  OneToMany,
+  PrimaryColumn
 } from 'typeorm'
 
 import LaunchServiceProvider from './LaunchServiceProvider'
@@ -17,7 +17,7 @@ export type StatusType = 'draft' | 'trash' | 'published'
 
 @Entity('launches')
 export default class Launch {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   id: string
 
   @Column('varchar')
@@ -71,7 +71,7 @@ export default class Launch {
   @Column('varchar', { nullable: true })
   infographic: string
 
-  @Column('time with time zone')
+  @Column('timestamp with time zone')
   imported_t: Date
 
   @Column({

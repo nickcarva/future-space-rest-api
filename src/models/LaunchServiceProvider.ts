@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   JoinColumn
 } from 'typeorm'
@@ -10,7 +10,7 @@ import Launch from './Launch'
 
 @Entity('launches_services_providers')
 export default class LaunchServiceProvider {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
   @Column('varchar')
@@ -19,7 +19,7 @@ export default class LaunchServiceProvider {
   @Column('varchar')
   name: string
 
-  @Column('varchar')
+  @Column('varchar', { nullable: true })
   type: string
 
   @OneToMany(() => Launch, launch => launch.launch_service_provider)

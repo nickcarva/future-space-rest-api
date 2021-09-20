@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   JoinColumn
 } from 'typeorm'
@@ -10,7 +10,7 @@ import Pad from './Pad'
 
 @Entity('pads_locations')
 export default class PadLocation {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
   @Column('varchar')

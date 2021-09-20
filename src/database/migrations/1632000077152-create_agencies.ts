@@ -8,8 +8,7 @@ export class createAgencies1632000077152 implements MigrationInterface {
         name: 'id',
         type: 'integer',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment'
+        isGenerated: false
       },
       {
         name: 'url',

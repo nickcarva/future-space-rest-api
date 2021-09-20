@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany
 } from 'typeorm'
 
@@ -10,7 +10,7 @@ import ProgramAgency from './ProgramAgency'
 
 @Entity('programs')
 export default class Program {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
   @Column('varchar')

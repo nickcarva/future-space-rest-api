@@ -8,8 +8,7 @@ export class createRockets1631925853987 implements MigrationInterface {
         name: 'id',
         type: 'integer',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment'
+        isGenerated: false
       }
     ]
   })

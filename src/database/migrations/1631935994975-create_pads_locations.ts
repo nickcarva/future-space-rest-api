@@ -8,8 +8,7 @@ export class createPadsLocations1631935994975 implements MigrationInterface {
         name: 'id',
         type: 'integer',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment'
+        isGenerated: false
       },
       {
         name: 'url',

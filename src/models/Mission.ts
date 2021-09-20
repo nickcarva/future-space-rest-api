@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   JoinColumn,
   ManyToOne
@@ -12,10 +12,10 @@ import MissionOrbit from './MissionOrbit'
 
 @Entity('missions')
 export default class Mission {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
-  @Column('integer')
+  @Column('integer', { nullable: true })
   launch_library_id: number
 
   @Column('varchar')
@@ -24,10 +24,10 @@ export default class Mission {
   @Column('varchar')
   description: string
 
-  @Column('varchar')
+  @Column('varchar', { nullable: true })
   launch_designator: string
 
-  @Column('varchar')
+  @Column('varchar', { nullable: true })
   type: string
 
   @Column('integer', { nullable: true })

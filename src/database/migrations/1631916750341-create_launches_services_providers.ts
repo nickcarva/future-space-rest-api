@@ -8,8 +8,7 @@ export class createLaunchesServicesProviders1631916750341 implements MigrationIn
         name: 'id',
         type: 'integer',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment'
+        isGenerated: false
       },
       {
         name: 'url',
@@ -21,7 +20,8 @@ export class createLaunchesServicesProviders1631916750341 implements MigrationIn
       },
       {
         name: 'type',
-        type: 'varchar'
+        type: 'varchar',
+        isNullable: true
       }
     ]
   })

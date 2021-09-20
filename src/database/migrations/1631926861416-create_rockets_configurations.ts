@@ -8,12 +8,12 @@ export class createRocketsConfigurations1631926861416 implements MigrationInterf
         name: 'id',
         type: 'integer',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment'
+        isGenerated: false
       },
       {
         name: 'launch_library_id',
-        type: 'integer'
+        type: 'integer',
+        isNullable: true
       },
       {
         name: 'url',

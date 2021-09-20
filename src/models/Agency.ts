@@ -1,14 +1,15 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
-  OneToMany
+  OneToMany,
+  PrimaryColumn
 } from 'typeorm'
+
 import ProgramAgency from './ProgramAgency'
 
 @Entity('agencies')
 export default class Agency {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
   @Column('varchar')

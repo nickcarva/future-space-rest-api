@@ -8,12 +8,12 @@ export class createMissions1631930906443 implements MigrationInterface {
         name: 'id',
         type: 'integer',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment'
+        isGenerated: false
       },
       {
         name: 'launch_library_id',
-        type: 'integer'
+        type: 'integer',
+        isNullable: true
       },
       {
         name: 'name',
@@ -25,11 +25,13 @@ export class createMissions1631930906443 implements MigrationInterface {
       },
       {
         name: 'launch_designator',
-        type: 'varchar'
+        type: 'varchar',
+        isNullable: true
       },
       {
         name: 'type',
-        type: 'varchar'
+        type: 'varchar',
+        isNullable: true
       }
     ]
   })

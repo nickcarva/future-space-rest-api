@@ -2,8 +2,7 @@ import {
   Entity,
   PrimaryColumn,
   ManyToOne,
-  JoinColumn,
-  PrimaryGeneratedColumn
+  JoinColumn
 } from 'typeorm'
 
 import Launch from './Launch'
@@ -11,7 +10,7 @@ import Program from './Program'
 
 @Entity('launches_programs')
 export default class LaunchProgram {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   launch_id: string
 
   @PrimaryColumn('integer')

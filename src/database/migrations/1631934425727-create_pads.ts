@@ -8,8 +8,7 @@ export class createPads1631934425727 implements MigrationInterface {
         name: 'id',
         type: 'integer',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment'
+        isGenerated: false
       },
       {
         name: 'url',
@@ -17,7 +16,8 @@ export class createPads1631934425727 implements MigrationInterface {
       },
       {
         name: 'agency_id',
-        type: 'integer'
+        type: 'integer',
+        isNullable: true
       },
       {
         name: 'name',

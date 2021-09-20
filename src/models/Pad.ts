@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   JoinColumn,
   ManyToOne
@@ -12,13 +12,13 @@ import PadLocation from './PadLocation'
 
 @Entity('pads')
 export default class Pad {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
   @Column('varchar')
   url: string
 
-  @Column('integer')
+  @Column('integer', { nullable: true })
   agency_id: number
 
   @Column('varchar')

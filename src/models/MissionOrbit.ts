@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   JoinColumn
 } from 'typeorm'
@@ -10,7 +10,7 @@ import Mission from './Mission'
 
 @Entity('missions_orbits')
 export default class MissionOrbit {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
   @Column('varchar')

@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   JoinColumn
 } from 'typeorm'
@@ -10,10 +10,10 @@ import Rocket from './Rocket'
 
 @Entity('rockets_configurations')
 export default class RocketConfiguration {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryColumn('integer')
   id: number
 
-  @Column('integer')
+  @Column('integer', { nullable: true })
   launch_library_id: number
 
   @Column('varchar')
