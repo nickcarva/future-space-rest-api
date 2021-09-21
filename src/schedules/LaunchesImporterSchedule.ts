@@ -5,7 +5,7 @@ import chalk from 'chalk'
 import { launchesApi } from '@config/launchesApi'
 import { saveLaunchesFromImport } from '@controllers/LaunchesController'
 
-schedule.scheduleJob('30 3 * * *', async () => {
+schedule.scheduleJob('30 6 * * *', async () => {
   console.log(chalk.green('Launches imports started...'))
   console.log(chalk.whiteBright(new Date()))
   console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))
