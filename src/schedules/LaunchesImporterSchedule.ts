@@ -3,6 +3,7 @@ import schedule from 'node-schedule'
 import chalk from 'chalk'
 
 import { launchesApi } from '@config/launchesApi'
+
 import { saveLaunchesFromImport } from '@controllers/LaunchesController'
 
 schedule.scheduleJob('30 6 * * *', async () => {

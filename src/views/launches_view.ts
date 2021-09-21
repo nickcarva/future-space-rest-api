@@ -62,7 +62,7 @@ export default {
         ? launchesProgramsView.renderManyPrograms(launch.launches_programs)
         : [],
 
-      imported_t: format(utcToZonedTime(launch.imported_t, timeZone), 'dd/MM/yyyy HH:mm:ss', { timeZone }),
+      imported_t: format(utcToZonedTime(launch.imported_t, timeZone), 'dd/MM/yyyy HH:mm:ss OOOO', { timeZone }),
       status: launch.status
     }
   },
