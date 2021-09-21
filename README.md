@@ -45,6 +45,19 @@ The header key is 'api-key'.
 </p>
 
 
+## 📍 REST API
+
+`GET /`: Return the message "REST Back-end Challenge 20201209 Running"
+
+`PUT /launchers/:launch_id`: Update a launch data
+
+`DELETE /launchers/:launch_id`: Delete a launch
+
+`GET /launchers/:launch_id`: Show a launch data
+
+`GET /launchers`: List all launches
+
+
 ## ⏱ Launches imports schedule
 
 So that we can have all launches updated, a schedule is set to everyday at 3:30 AM for import all launches from the Space Devs API. When testing this project, you can change the schedule time in `src/schedules/LaunchesImporterSchedule.ts` using the [node-schedule CRON](https://www.npmjs.com/package/node-schedule) rules.
