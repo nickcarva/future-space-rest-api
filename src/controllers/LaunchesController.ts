@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
 import * as Yup from 'yup'
 
-import Launch from '@models/Launch'
+import Launch, { StatusType } from '@models/Launch'
 import LaunchServiceProvider from '@models/LaunchServiceProvider'
 import RocketConfiguration from '@models/RocketConfiguration'
 import Rocket from '@models/Rocket'
@@ -16,6 +16,20 @@ import ProgramAgency from '@models/ProgramAgency'
 import LaunchProgram from '@models/LaunchProgram'
 
 import launchesView from '@views/launches_view'
+
+type ExternalAPIStatusType = 'TBD' | 'Go' | 'Success' | 'Failure' | 'Hold' | 'In Flight' | 'Partial Failure'
+
+function getLaunchStatus (statusFromExternalAPI: ExternalAPIStatusType): StatusType {
+  if (statusFromExternalAPI === 'Success') {
+    return 'published'
+  }
+
+  if (statusFromExternalAPI === 'Failure') {
+    return 'trash'
+  }
+
+  return 'draft'
+}
 
 export async function saveLaunchesFromImport (launches: any) {
   const launchServiceProviderRepository = getRepository(LaunchServiceProvider)
@@ -296,7 +310,7 @@ export async function saveLaunchesFromImport (launches: any) {
     if (!existentLaunch) {
       const launchToSave = launchRepository.create({
         ...launchData,
-        status: 'draft'
+        status: getLaunchStatus(launch.status ? launch.status.name : 'Hold')
       })
       await launchRepository.save(launchToSave)
 
@@ -306,7 +320,7 @@ export async function saveLaunchesFromImport (launches: any) {
         id: launch.id
       }, {
         ...launchData,
-        status: 'draft'
+        status: getLaunchStatus(launch.status ? launch.status.name : 'Hold')
       })
     }
 

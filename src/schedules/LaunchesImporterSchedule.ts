@@ -48,9 +48,11 @@ schedule.scheduleJob('30 6 * * *', async () => {
 
     console.log(chalk.bgGreen.black(`Imports count: ${importedLaunchesCount}`))
 
-    // wait 180 seconds
-    await new Promise(res => setTimeout(res, 180000))
+    // wait 300 seconds -> 5 minutes
+    await new Promise(res => setTimeout(res, 300000))
   }
+
+  // Without any errors: about 100 minutes to finish
 
   console.log(chalk.gray('-=-=-=-=-=-=-=-=-=-=-='))
   console.log(chalk.whiteBright(new Date()))
