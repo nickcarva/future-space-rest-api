@@ -44,3 +44,7 @@ The header key is 'api-key'.
   <img alt="api-key-representation" src="./.github/assets/api-key-representation.jpg" width="500">
 </p>
 
+
+## ⏱ Launches imports schedule
+
+So that we can have all launches updated, a schedule is set to everyday at 3:30 AM for import all launches from the Space Devs API. When testing this project, you can change the schedule time in `src/schedules/LaunchesImporterSchedule.ts` using the [node-schedule CRON](https://www.npmjs.com/package/node-schedule) rules.
