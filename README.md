@@ -12,8 +12,6 @@ In here, you can see and test the REST API of rocket launches from FutureSpace I
 
 ## 🚀 Getting started
 
-Copy `.env-sample` to `.env` and fill the environment variables based your data to access the pg database and the API.
-
 To clone and run the application, you will need to have [Git](https://git-scm.com), [Node.js](https://nodejs.org) + [Yarn](https://yarnpkg.com), [PostgreSQL](https://www.postgresql.org/download/) (with a pre created database named future-space) installed on your machine. With all programs installed, run the following command lines:
 
 ```bash
@@ -28,7 +26,11 @@ $ yarn install
 
 # Run all migrations
 $ yarn typeorm migration:run
+```
 
+Before start the server, you must copy `.env-sample` to `.env` and fill the environment variables based your data to access the pg database and the API.
+
+```bash
 # Run application
 $ yarn dev
 ```
